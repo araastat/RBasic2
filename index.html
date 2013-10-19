@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>R Basics II</title>
+  <meta charset="utf-8">
+  <meta name="description" content="R Basics II">
+  <meta name="author" content="Abhijit Dasgupta">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/solarized-light.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+    <link rel="stylesheet" href = "libraries/widgets/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href = "libraries/widgets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href = "assets/css/custom.css">
+<link rel="stylesheet" href = "assets/css/ribbons.css">
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+    <!-- END LOGO SLIDE -->
+    
+
+    <!-- TITLE SLIDE -->
+    <!-- Should I move this to a Local Layout File? -->
+    <slide class="title-slide segue nobackground">
+      <aside class="gdbar">
+        <img src="assets/img/Rlogo-1.png">
+      </aside>
+      <hgroup class="auto-fadein">
+        <h1>R Basics II</h1>
+        <h2>A Data Workshop presented by Data Community DC</h2>
+        <p>Abhijit Dasgupta<br/>Data Community DC</p>
+      </hgroup>
+      <a href="https://github.com/araastat/RBasic2/zipball/gh-pages" class="example">
+        Download
+      </a>
+      
+      <footer class = 'license'>
+        <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/'>
+        <img width = '80px' src = 'http://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png'>
+        </a>
+      </footer>
+    </slide>
+
+    <!-- SLIDES -->
+      <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>About me</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>PhD biostatistician with over 10 years bioinformatics experience</li>
+<li>Data Science / Data Engineering consultant
+
+<ul>
+<li>NIH, local startups, Brown University</li>
+</ul></li>
+<li>20 years experience in R, S+</li>
+<li>Organizer of Statistical Programming DC meetup</li>
+<li>Board member of Data Community DC</li>
+</ul>
+
+<!-- html table generated in R 3.0.1 by xtable 1.7-1 package -->
+
+<!-- Sat Oct 19 11:45:00 2013 -->
+
+<TABLE border=0>
+  <TR> <TD> E-mail </TD> <TD> abhijit@datacommunitydc.org </TD> </TR>
+  <TR> <TD> Twitter </TD> <TD> @webbedfeet </TD> </TR>
+   </TABLE>
+
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Assumptions</h2>
+  </hgroup>
+  <article>
+    <ul class = "build">
+<li>You have R installed</li>
+<li>You know some basics of R 
+
+<ul>
+<li>Creating variables</li>
+<li>Creating basic graphs</li>
+<li>Running some analyses</li>
+</ul></li>
+<li>You may or may not have programming experience</li>
+<li>You love playing with data</li>
+</ul>
+
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Objective</h2>
+  </hgroup>
+  <article>
+    <h3>To get you started using R for a data analysis workflow</h3>
+
+<p><img src="Workflow.svg" alt=""></p>
+
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Objective</h2>
+  </hgroup>
+  <article>
+    <h3>To get you started using R for a data analysis workflow</h3>
+
+<p><img src="Workflow2.svg" alt=""></p>
+
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="segue dark" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Background</h2>
+  </hgroup>
+  <article>
+    
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Some background knowledge</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>R as a calculator</li>
+<li>Ingesting data
+
+<ul>
+<li><code>read.table</code>, <code>read.csv</code></li>
+</ul></li>
+<li>Types of data
+
+<ul>
+<li>numeric, integer, character, Date</li>
+<li>vector, matrix, array, list, <strong>data.frame</strong></li>
+</ul></li>
+<li>Base graphics
+
+<ul>
+<li>plot, points, lines</li>
+<li>xlab, ylab</li>
+<li>par (col, cex, ...)</li>
+<li>mfrow</li>
+</ul></li>
+</ul>
+
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Some background knowledge</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Export graphs
+
+<ul>
+<li>png, svg, pdf, jpeg</li>
+</ul></li>
+<li>Some statistics
+
+<ul>
+<li><code>mean</code>, <code>median</code>, <code>summary</code></li>
+<li><code>t.test</code>, <code>wilcox.text</code>, <code>lm</code></li>
+</ul></li>
+</ul>
+
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Launching pad</h2>
+  </hgroup>
+  <article>
+    <p>We will take off from here:</p>
+
+<ul>
+<li>More functionality of R</li>
+<li>Introduction to the R package ecosystem</li>
+<li>&quot;Best&quot; practices (or rather, my practices)</li>
+<li>Tips and Tricks</li>
+<li>Resources</li>
+</ul>
+
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="quote nobackground segue dark" id="slide-9" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <p><q> The question is not if R can do it, but how</q></p>
+
+<p style="text-align:right;"> -- Douglas Bates </p>
+
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="segue dark" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>ETL (Extract, Transform, Load)</h2>
+  </hgroup>
+  <article>
+    
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="segue dark" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Extract</h2>
+  </hgroup>
+  <article>
+    
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Reading data into R</h2>
+  </hgroup>
+  <article>
+    <p>The workhorse for reading <em>tabular</em> data is <code>read.table</code></p>
+
+<pre><code class="r">args(read.table)
+</code></pre>
+
+<pre><code>## function (file, header = FALSE, sep = &quot;&quot;, quote = &quot;\&quot;&#39;&quot;, dec = &quot;.&quot;, 
+##     row.names, col.names, as.is = !stringsAsFactors, na.strings = &quot;NA&quot;, 
+##     colClasses = NA, nrows = -1, skip = 0, check.names = TRUE, 
+##     fill = !blank.lines.skip, strip.white = FALSE, blank.lines.skip = TRUE, 
+##     comment.char = &quot;#&quot;, allowEscapes = FALSE, flush = FALSE, 
+##     stringsAsFactors = default.stringsAsFactors(), fileEncoding = &quot;&quot;, 
+##     encoding = &quot;unknown&quot;, text) 
+## NULL
+</code></pre>
+
+<h3>Too much information!!!</h3>
+
+<p>You can find explanations for all the arguments by using <code>?read.table</code></p>
+
+
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+  <aside class="note">
+    <section>
+      <p>This is an example of a <code>function</code> in R. Functions have <em>arguments</em>, and you
+can set default values for several of the arguments</p>
+
+<p>The help system can be accessed using <code>?read.table</code> or <code>help(read.table)</code></p>
+
+    </section>
+  </aside>
+</slide>
+
+      <slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Reading data into R</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">BP &lt;- read.table(&quot;data/bpdata.csv&quot;, header = T, sep = &quot;,&quot;)
+head(BP)
+</code></pre>
+
+<pre><code>##   X X.1    sex sbp dbp snp1 snp2 snp3 snp4 snp5 snp6 snp7 snp8 snp9 snp10
+## 1 1   1 FEMALE 171  89   CC   TT   TT   TT   CC   GG   AA   TT   TT    CC
+## 2 2   2   MALE 160  99   TT   TT   CC &lt;NA&gt;   CC   AG   AT   CC   CT    CC
+## 3 3   3 FEMALE 142  83   CT   TT   TC   CT   CC   AG   TT   CC   TT    CT
+## 4 4   4   MALE 126  71   CT   TT   CC &lt;NA&gt;   CC   AA   TT   CC   TT    CT
+## 5 5   5 FEMALE 126  82   CT   TT   CC   CC   CC   AA   TT   CC   TT    CT
+## 6 6   6 FEMALE 132  89   CT   TT   CC   CC   CC &lt;NA&gt;   TT   CC   TT    TT
+##   snp11 bmi
+## 1    TT  25
+## 2    CT  35
+## 3    TT  34
+## 4    CT  32
+## 5    CT  34
+## 6    CT  25
+</code></pre>
+
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Reading data into R</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">BP &lt;- read.table(&quot;data/bpdata.csv&quot;, header = T, sep = &quot;,&quot;)
+head(BP)
+</code></pre>
+
+<pre><code class="r">BP &lt;- read.csv(&quot;data/bpdata.csv&quot;)
+</code></pre>
+
+<p>These functions are for tabular data stored in text files (even on the web!)</p>
+
+<p>Let&#39;s get monthly S&amp;P data between April 1, 1999 and April 1, 2009</p>
+
+<pre><code class="r">sp500 &lt;- read.csv(paste(&quot;http://ichart.finance.yahoo.com/table.csv?s=%5EGSPC&amp;a=03&amp;b=1&amp;c=1999&amp;d=03&amp;e=1&amp;f=2009&amp;g=m&amp;ignore=.csv&quot;))
+head(sp500, n = 3)
+</code></pre>
+
+<pre><code>##         Date  Open  High   Low Close    Volume Adj.Close
+## 1 2009-04-01 793.6 813.6 783.3 811.1 1.207e+10     811.1
+## 2 2009-03-02 729.6 833.0 666.8 797.9 7.633e+09     797.9
+## 3 2009-02-02 823.1 875.0 734.5 735.1 7.022e+09     735.1
+</code></pre>
+
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Reading from databases</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">library(RODBC)  # Calling a package names RODBC
+con &lt;- odbcConnect(&quot;MCT4&quot;)
+sqlTables(con)
+</code></pre>
+
+<pre><code>##   TABLE_CAT TABLE_SCHEM TABLE_NAME TABLE_TYPE REMARKS
+## 1      &lt;NA&gt;        &lt;NA&gt;     Sheet1      TABLE    &lt;NA&gt;
+</code></pre>
+
+<pre><code class="r">dat &lt;- sqlFetch(con, &quot;Sheet1&quot;)
+head(dat[, 1:4])
+</code></pre>
+
+<pre><code>##   patid         Spec No  Age             Race
+## 1    NA            &lt;NA&gt; &lt;NA&gt;             &lt;NA&gt;
+## 2     1        s03-6643   62 african american
+## 3     2       S98-16845   70            white
+## 4     3 S00-10987 re-ex   43 african american
+## 5    NA     S00-07663 p   43 african american
+## 6     4       S99-22161   54            white
+</code></pre>
+
+<pre><code class="r">odbcClose(con)
+</code></pre>
+
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Reading from databases</h2>
+  </hgroup>
+  <article>
+    <p>On Windows, you can directly read from Excel files (often the quickest, most accurate method)</p>
+
+<pre><code class="r">library(RODBC)
+con &lt;- odbcConnectExcel(xls.file=&quot;C:/folder/data/myfile.xls&quot;)
+dat1 &lt;- sqlFetch(con, &#39;Sheet1&#39;)
+odbcClose(con)
+</code></pre>
+
+<p>You can also connect to MySQL (<code>RMySQL</code>), SQLite (<code>RSQLite</code>), PostgreSQL (<code>RPostgreSQL</code>)</p>
+
+<p>Connections are also now available to Oracle, SAP, Teradata (use <code>Google</code>)</p>
+
+<blockquote>
+<p><code>RMySQL</code> under Windows is not straightforward. Use the advice available 
+  <a href="http://stackoverflow.com/questions/9441527/rmysql-windows-7-home-installation-error">here</a></p>
+</blockquote>
+
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    
+    <div id="footer">
+  <div class='runhead'><p style='text-align:right'>R Basics II</p></div>
+  </div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+
+  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+<!-- Grab CDN jQuery, fall back to local if offline -->
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+<script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery-1.7.min.js"><\/script>')</script>
+<!-- Load Javascripts for Widgets -->
+<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script> -->
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<script src='libraries/widgets/bootstrap/js/bootstrap.min.js'></script>
+<script>  
+$(function (){ 
+  $("#example").popover(); 
+  $("[rel='tooltip']").tooltip(); 
+});  
+</script>  
+<!-- LOAD HIGHLIGHTER JS FILES -->
+<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+</html>

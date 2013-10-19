@@ -1,0 +1,209 @@
+---
+title       : R Basics II
+subtitle    : A Data Workshop presented by Data Community DC
+author      : Abhijit Dasgupta
+job         : Data Community DC
+github:
+  user: araastat
+  repo : RBasic2
+  branch: "gh-pages"
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme : solarized-light
+widgets     : [mathjax, bootstrap]      # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+logo : Rlogo-1.png
+license : by-nc-nd
+--- 
+## About me
+
++ PhD biostatistician with over 10 years bioinformatics experience
++ Data Science / Data Engineering consultant
+  + NIH, local startups, Brown University
++ 20 years experience in R, S+
++ Organizer of Statistical Programming DC meetup
++ Board member of Data Community DC
+
+
+
+```{r, echo=FALSE,results='asis'}
+library(xtable)
+X <- matrix("",ncol=2,nrow=2)
+X[,1] <- c('E-mail','Twitter')
+X[,2] <- c('abhijit@datacommunitydc.org','@webbedfeet')
+print(xtable(X),type='html', include.rownames=F, include.colnames=F,
+      html.table.attributes=getOption('xtable.html.table.attributes','border=0'))
+```
+
+
+---
+
+## Assumptions
+
+> + You have R installed
+> + You know some basics of R 
+    + Creating variables
+    + Creating basic graphs
+    + Running some analyses
+> + You may or may not have programming experience
+> + You love playing with data
+
+--- 
+## Objective
+
+### To get you started using R for a data analysis workflow
+
+![](Workflow.svg)
+
+--- 
+## Objective
+
+### To get you started using R for a data analysis workflow
+
+![](Workflow2.svg)
+
+---.segue .dark
+## Background
+
+---
+## Some background knowledge
+
++ R as a calculator
++ Ingesting data
+  + `read.table`, `read.csv`
++ Types of data
+  + numeric, integer, character, Date
+  + vector, matrix, array, list, **data.frame**
++ Base graphics
+  + plot, points, lines
+  + xlab, ylab
+  + par (col, cex, ...)
+  + mfrow
+
+---
+## Some background knowledge
+
++ Export graphs
+  + png, svg, pdf, jpeg
++ Some statistics
+  + `mean`, `median`, `summary`
+  + `t.test`, `wilcox.text`, `lm`
+
+---
+## Launching pad
+
+We will take off from here:
+
++ More functionality of R
++ Introduction to the R package ecosystem
++ "Best" practices (or rather, my practices)
++ Tips and Tricks
++ Resources
+
+--- .quote .nobackground .segue .dark
+
+<q> The question is not if R can do it, but how</q>
+<p style="text-align:right;"> -- Douglas Bates </p>
+
+--- .segue .dark
+## ETL (Extract, Transform, Load)
+
+--- .segue .dark
+## Extract
+
+---
+
+## Reading data into R
+
+The workhorse for reading _tabular_ data is `read.table`
+```{r}
+args(read.table)
+```
+
+### Too much information!!!
+
+You can find explanations for all the arguments by using `?read.table`
+
+*** pnotes
+
+This is an example of a `function` in R. Functions have _arguments_, and you
+can set default values for several of the arguments
+
+The help system can be accessed using `?read.table` or `help(read.table)`
+
+---
+
+## Reading data into R
+
+```{r}
+BP <- read.table('data/bpdata.csv', header=T, sep=',')
+head(BP)
+```
+
+---
+## Reading data into R
+
+```{r, results='hide'}
+BP <- read.table('data/bpdata.csv', header=T, sep=',')
+head(BP)
+```
+
+```{r,results='hide'}
+BP <- read.csv('data/bpdata.csv')
+```
+
+These functions are for tabular data stored in text files (even on the web!)
+
+Let's get monthly S&P data between April 1, 1999 and April 1, 2009
+
+```{r}
+sp500 <- read.csv(paste("http://ichart.finance.yahoo.com/table.csv?s=%5EGSPC&a=03&b=1&c=1999&d=03&e=1&f=2009&g=m&ignore=.csv"))
+head(sp500, n=3)
+```
+
+---
+## Reading from databases
+
+```{r}
+library(RODBC) # Calling a package names RODBC
+con <- odbcConnect('MCT4')
+sqlTables(con)
+dat <- sqlFetch(con,'Sheet1')
+head(dat[,1:4])
+odbcClose(con)
+```
+
+---
+## Reading from databases
+
+On Windows, you can directly read from Excel files (often the quickest, most accurate method)
+
+```r
+library(RODBC)
+con <- odbcConnectExcel(xls.file="C:/folder/data/myfile.xls")
+dat1 <- sqlFetch(con, 'Sheet1')
+odbcClose(con)
+```
+
+You can also connect to MySQL (`RMySQL`), SQLite (`RSQLite`), PostgreSQL (`RPostgreSQL`)
+
+Connections are also now available to Oracle, SAP, Teradata (use `Google`)
+
+> `RMySQL` under Windows is not straightforward. Use the advice available 
+  [here](http://stackoverflow.com/questions/9441527/rmysql-windows-7-home-installation-error)
+
+---
+## Reading irregular or messy data
+
+How often is your data _nice_?
+
+You can read most data files using the function `readLines`.
+```{r}
+BP <- readLines('data/bpdata.csv)
+```
+
+
+
+
+
+
