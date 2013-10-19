@@ -62,6 +62,24 @@ print(xtable(X),type='html', include.rownames=F, include.colnames=F,
 
 ![](Workflow2.svg)
 
+---
+## Expectations
+
+### What to expect
++ Overview of R and how to get started with analytics using R
++ Hands-on examples
++ A launching pad for your adoption and use of R
+
+### What <u>not</u> to expect
++ A comprehensive, all-encompassing description of R
++ Covering everything R can do
+
+--- 
+## The way forward from here
+### Use R for as many projects as possible
+### Work through the "steep" learning curve
+### Use available resources both within R and online
+
 ---.segue .dark
 ## Background
 
@@ -90,6 +108,58 @@ print(xtable(X),type='html', include.rownames=F, include.colnames=F,
   + `t.test`, `wilcox.text`, `lm`
 
 ---
+
+## Where are we?
+
++ The first thing you want to do is contain all your project-related scripts in a folder
++ All the R data files will be in this folder
+
+```r
+getwd() # What is the current working directory?
+setwd() # Set the working directory
+```
+
+### What's here?
+
+```r
+dir()       # shows files in current directory
+file.path() # creates a file path string
+ls()        # Shows objects in the current session
+```
+<div style="background-color:lightgrey;">
+<p>
+RStudio allows you to create "Projects" which hold everything nicely
+together along with Git functionality, if desired</p>
+</div>
+
+---
+## Banging head on wall???
+
+### Within R
+
++ `help` or `?`
+  + `help(data.frame)` or `?data.frame`
+
+### Online
++ Stack Overflow: r tag
++ Twitter: #rstats
++ R-Bloggers.com
+
+---
+
+## Some tips on R coding
+
++ The R Style Guide by Google
++ Comment character `#` can be placed at the beginning or at the right of code
++ Statements are ended with return or semicolon (;)
++ Names in R are quite liberal but it is recommended that you use common naming conventions
+  + First character letter, followed by letters, digits, underscores or periods
+  + Note that the period has some special meaning and is used often in R naming to separate object names (e.g. customer.name)
+  + It is recommended that variable names use underscores instead of dots especially when combining with databases
+
+
+---
+
 ## Launching pad
 
 We will take off from here:
@@ -199,11 +269,241 @@ How often is your data _nice_?
 
 You can read most data files using the function `readLines`.
 ```{r}
-BP <- readLines('data/bpdata.csv)
+BP <- readLines('data/bpdata.csv')
+head(BP)
 ```
 
+---
+## The `data.frame` object
 
++ The `data.frame` is the workhorse of R
++ A `data.frame` is essentially a list of vectors of the same length
+  + Each vector may be of a different type
++ A `data.frame` is represented as a table, with columns being the vectors
++ Think of a `data.frame` as a collection of variables
++ You can manipulate a `data.frame` like a matrix
+  + `D[1,]` or `D[,1:2]`
+  + It is <u>not</u> a matrix
++ You can extract variables 
+  + `D$index` or `D[,'index']` (recall data frames have columnar representation)
++ Data frames act like SQL tables
+  + You can join them (`merge`) and append to them (`cbind`, `rbind`)
 
+---
 
+## The `factor` type
 
++ Factors are R's representation of categorical variables
++ Factors look like vectors of characters, but they are not!!
+
+```r
+gender = factor(c('M','M','F','M','F','F','F'))
+levels(gender)
+is.factor(gender)
+is.character(gender)
+as.numeric(gender)
+```
++ Internally, factors are represented as integers, with each 
+integer corresponding to a level of the categorical variable
+
+---
+## Functions
+
+Functions in R have the syntax
+
+```r
+functionname <- function(inp1, inp2=3, ...){
+
+  statements
+  
+  return(list of output objects)
+
+}
+```
+
++ If the `return` statement is absent, the function returns the last 
+object created.
++ `...` signifies optional parameters
++ You would use this as `results <- functionname(inp1=x, inp2=4, inp3=9)`
++ Functions are objects
+
+--- .segue .dark
+
+## Common errors
+
+---
+## Common errors
+
+```{r}
+library(ada)
+```
+
+> + Usually means that R package is not installed. Install it using `install.packages('ada')`
+
+---
+## Common errors
+
+```{r}
+data(mtcars)
+sumary(mtcars)
+```
+
+> + Check the spelling of your function. Here it should be `summary`, i.e., you missed a `m`
+
+---
+## Common errors
+
+```{r}
+asfactor(1:10, ecxlud=NA)
+```
+
+> + Missing a `.`. The function is `as.factor`
+> + Most 2-word function names in R are separated by `.`
+
+--- .segue .dark
+
+## Transformation
+
+---
+## Data cleaning
+
+### Missing values
++ Missing values are coded as `NA`
++ R can test for missing values using `is.na`
++ Rows of data frames with complete data can be identified using 
+`complete.cases(D)`
+
+### Duplication
++ You can get a set of non-duplicate rows of a data frame using 
+`D[!duplicated(D),]`.
+
+---
+---
+
+## transform
+
+The `transform` function works on data.frames and allows you to quickly generate transformations of your data
+
+```r
+data(mtcars)
+mtcars <- transform(mtcars, kmpg = mpg*1.6)
+```
+
+---
+
+## Subsetting
+
+The `subset` function can be used to easily subset data frames by rows and columns
+
+```r
+cars2 <- subset(mtcars, subset=(cyl==4 & mpg > 25) )
+```
+
+This is similar to using `sqldf`
+
+```r
+sqldf('select * from mtcars where cyl=4 and mpg > 25')
+```
+
+--- .segue .dark
+
+## "Apply"ing yourself
+
+---
+
+## apply
+
+`apply` works with matrices and applies a function along rows or columns
+
+```r
+X = matrix(rnorm(100), ncol=5)
+apply(X, 1, mean) # mean by rows
+apply(X, 2, max) # maximum within columns
+```
+
+---
+
+## lapply
+
+`lapply` applies the same function over elements of a list
+
+```r
+x <- list()
+x[[1]] <- rnorm(10)
+x[[2]] <- rnorm(25)
+x[[3]] <- c('a','c','x','g')
+
+lapply(x, sort)
+```
+
+Recall that a `data.frame` is really a `list`, with the columns as elements of the list
+```r
+lapply(mtcars, sort)
+```
+
+--- .segue .dark
+
+## Wickham's duo: reshaping and split-apply-combine
+
+---
+
+## reshape2
+
+`reshape2` has functions to allow you to take a data frame from wide to long
+
+```r
+R.df2 <- melt(R.df, id='ID')
+```
+
+---
+
+## Split-apply-combine
+
+The basic idea of split-apply-combine is to
+
++ split the data by some criterion
++ apply a function to the split data
++ combine the results of the function
+
+---
+
+## plyr
+
+plyr provides functions of the form (x)(y)ply, where
+
++ (x) is the data type of the input
++ (y) is the data type of the output
+
+For example, ddply, dlply, ldply, etc.
+
+```{r}
+library(plyr)
+summ <- ddply(mtcars, ~cyl, summarise, mean.mpg=mean(mpg))
+print(summ)
+```
+
+---
+## data.table
+
+```{r}
+library(data.table)
+DT <- data.table(mtcars)
+print(DT[,mean(mpg), by=cyl])
+```
+
+---
+## sqldf
+
+This allows you to treat `data.frame` objects as SQL tables and use SQL statements
+```{r}
+library(sqldf)
+sqldf('select cyl, avg(mpg) from mtcars group by cyl')
+```
+
+---.segue .dark
+
+## Live-coding
+
+---.segue .dark
+## Visualization
 
