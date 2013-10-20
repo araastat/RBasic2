@@ -26,8 +26,19 @@ license : by-nc-nd
 
 
 
+
+```
+## Attaching package: 'xtable'
+```
+
+```
+## The following object is masked from 'package:Hmisc':
+## 
+## label, label<-
+```
+
 <!-- html table generated in R 3.0.1 by xtable 1.7-1 package -->
-<!-- Sat Oct 19 13:05:40 2013 -->
+<!-- Sat Oct 19 15:57:08 2013 -->
 <TABLE border=0>
   <TR> <TD> E-mail </TD> <TD> abhijit@datacommunitydc.org </TD> </TR>
   <TR> <TD> Twitter </TD> <TD> @webbedfeet </TD> </TR>
@@ -264,14 +275,22 @@ Let's get monthly S&P data between April 1, 1999 and April 1, 2009
 
 ```r
 sp500 <- read.csv(paste("http://ichart.finance.yahoo.com/table.csv?s=%5EGSPC&a=03&b=1&c=1999&d=03&e=1&f=2009&g=m&ignore=.csv"))
+```
+
+```
+## Warning: unable to resolve 'ichart.finance.yahoo.com'
+```
+
+```
+## Error: cannot open the connection
+```
+
+```r
 head(sp500, n = 3)
 ```
 
 ```
-##         Date  Open  High   Low Close    Volume Adj.Close
-## 1 2009-04-01 793.6 813.6 783.3 811.1 1.207e+10     811.1
-## 2 2009-03-02 729.6 833.0 666.8 797.9 7.633e+09     797.9
-## 3 2009-02-02 823.1 875.0 734.5 735.1 7.022e+09     735.1
+## Error: object 'sp500' not found
 ```
 
 
@@ -575,19 +594,6 @@ For example, ddply, dlply, ldply, etc.
 
 ```r
 library(plyr)
-```
-
-```
-## Attaching package: 'plyr'
-```
-
-```
-## The following object is masked from 'package:Hmisc':
-## 
-## is.discrete, summarize
-```
-
-```r
 summ <- ddply(mtcars, ~cyl, summarise, mean.mpg = mean(mpg))
 print(summ)
 ```
@@ -635,4 +641,12 @@ sqldf("select cyl, avg(mpg) from mtcars group by cyl")
 ## 2   6    19.74
 ## 3   8    15.10
 ```
+
+
+---.segue .dark
+
+## Live-coding
+
+---.segue .dark
+## Visualization
 
